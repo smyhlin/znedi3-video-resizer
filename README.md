@@ -20,6 +20,10 @@ select input \ output path and encoder.
 
 
 # Temporaly not worked:
+## TODO:
+* make more detailed instruction
+* finish interactive run
+* add GUI
 ```CMD
 
 ```znedi3-video-resizer <input_video> <output_video> [options]```
