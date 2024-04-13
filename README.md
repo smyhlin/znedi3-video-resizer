@@ -1,0 +1,56 @@
+# znedi3-video-resizer
+
+A powerful and versatile video resizing tool based on nnedi3 -> znedi3 utils focused on easy of use and user-friendly usage.
+This program allows you to easily resize your video files to your desired dimensions or select from predefined presets.
+
+#### Features:
+
+Resizes videos to custom width, height, or both.
+Offers common video resolution presets (e.g., 720p, 1080p) for quick selection.
+Supports various video formats (compatibility may depend on your system's libraries).
+
+#### Installation:
+```pip install -r requirements.txt``` 
+>Also ffmpeg needed t obe added to PATH env:
+>https://www.wikihow.com/Install-FFmpeg-on-Windows
+___
+#### Usage:
+Just for now just run `rezise_encode.bat` and change params inside it to your wish:
+select input \ output path and encoder.
+
+
+# Temporaly not worked:
+```CMD
+
+```znedi3-video-resizer <input_video> <output_video> [options]```
+___
+#### Options:
+
+> -w, --width <width>: Specify the desired output video width (pixels).
+
+> -h, --height <height>: Specify the desired output video height (pixels).
+
+> -p, --preset <preset>: Select a predefined video resolution preset (e.g., 720p, 1080p).
+___
+#### Examples:
+
+Resize a video to a custom width and height:
+CMD
+
+```znedi3-video-resizer input.mp4 output.avi -w 640 -h 480```
+
+Resize a video using a preset resolution:
+CMD
+
+```znedi3-video-resizer my_video.mkv resized_video.mp4 -p 1080p```
+```
+___
+#### Additional Notes:
+
+For a complete list of supported video formats and available options, refer to the [ffmpeg's documentation](https://ffmpeg.org/ffmpeg-formats.html)
+
+
+We welcome contributions to this project! If you'd like to help improve znedi3-video-resizer.
+
+#### License:
+GPLv3
