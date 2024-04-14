@@ -5,7 +5,6 @@ import sys
 import os
 import pathlib
 import vapoursynth as vs
-from vapoursynth import core
 from nnedi3_resample import nnedi3_resample
 
 
@@ -14,9 +13,6 @@ sys.path.append(str(pathlib.Path().absolute()))
 args = dict(globals())
 
 required_args = {'video_path'}
-a = '1'
-b = 2
-c = a/b
 args = dict(globals())
 
 for arg in required_args:
