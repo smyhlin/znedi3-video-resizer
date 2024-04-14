@@ -2,7 +2,7 @@
 import argparse, sys
 import vapoursynth as vs
 from vapoursynth import core
-from nnedi3_resample import nnedi3_resample
+from modules.nnedi3_resample import nnedi3_resample
 
 
 def init_console_argument_parser():
