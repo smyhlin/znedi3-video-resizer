@@ -14,7 +14,7 @@ args = dict(globals())
 
 required_args = {'video_path'}
 args = dict(globals())
-
+print(args)
 for arg in required_args:
     if arg not in args:
         raise ValueError(f"{arg} must be defined in globals")
