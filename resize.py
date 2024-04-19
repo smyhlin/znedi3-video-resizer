@@ -6,6 +6,8 @@ import argparse, sys
 import vapoursynth as vs
 from vapoursynth import core
 from modules.nnedi3_resample import nnedi3_resample
+import re
+import shlex
 
 
 def init_console_argument_parser():
@@ -18,25 +20,44 @@ def init_console_argument_parser():
     parser.add_argument("-hr","--height", help="(optional) Video height resolution (default source*2)", type= int, required=False)
     return parser
  
+def _get_locate_command_result(bin_name, default_path=""):
+
+    which_command = 'where' if 'win' in sys.platform else 'which'
+    try:
+        result_locate = subprocess.check_output(
+            shlex.split("%s %s" % (which_command, bin_name)), env=os.environ)
+        result_locate_table = re.split(r"\r?\n", result_locate.decode())
+        try:
+            bin_path = result_locate_table[0].strip()
+        except IndexError:
+            bin_path = bin_name
+        return bin_path
+
+    except subprocess.CalledProcessError:
+        return default_path
 
 def resize_video(video_path, video_settings, output_video):
     encode_vpy_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                            r"modules\encode.vpy")
     # https://forum.doom9.org/showthread.php?t=173094
     print(encode_vpy_path)
-    command1 = f'VSPipe.exe --y4m --arg "video_path={video_path}" {encode_vpy_path} - | '
-    command2 = f'ffmpeg -i pipe: -i "{video_path}" -map 0 -map 1:a -map 1:s? -c:v {video_settings} "{output_video}"'
+    # command1 = f'VSPipe.exe --y4m --arg "video_path={video_path}" "{encode_vpy_path}" -'
+    # command2 = f'ffmpeg.exe -i pipe: -i "{video_path}" -map 0 -map 1:a -map 1:s? -c:v {video_settings} "{output_video}"'
 
+    command1 = (f'"{_get_locate_command_result("VSPipe.exe", "VSPipe.exe")}" --y4m --arg "video_path={video_path}" "{encode_vpy_path}"  -')
+    command2 = (f'"{_get_locate_command_result("ffmpeg.exe", "ffmpeg.exe")}" -i pipe: -i "{video_path}" -map 0 -map 1:a -map 1:s? -c:v {video_settings} "{output_video}"')
+    print(command1)
+    print(command2)
     process1 = Popen(command1, stdout=PIPE, shell=False)
     process2 = Popen(command2, stdin=process1.stdout, stderr=PIPE)
-
     # while True:
     for i in range(10):
         line = process2.stderr.readline().decode('utf-8')
         print(line)
 
+
 def get_video_settings_presset(args):
-    video_settings = ''
+    video_settings=''
     p=['user_friendly_numerator',
         'libx264 -crf 13 -preset slow -tune animation',
         'libx265 -crf 16 -preset slow -x265-params "sao=0:bframes=8:psy-rd=1.5:psy-rdoq=2:aq-mode=3:ref=6"',
@@ -66,12 +87,13 @@ def get_video_settings_presset(args):
         else:
             video_settings = 'ffv1'
 
-    print(video_settings)
+    return video_settings
+
 
 if __name__ == "__main__":
     parser = init_console_argument_parser()
     if len(sys.argv) < 2:
-        print('Incorrect command.\nTry:\nresize.py -i video_path\nresize.py -i video_path -w 1280 -h 720\nresize.py -i video_path -p x4')
+        print('Incorrect command.\nTry:\nresize.py -i video_path\nresize.py -i video_path -w 1280 -h 720\nresize.py -i video_path -p x264')
         print(parser.format_help())
 
     else:
@@ -79,6 +101,7 @@ if __name__ == "__main__":
         video_path = args.input
         output_video = args.output if args.output else os.path.dirname(video_path)
         video_settings = get_video_settings_presset(args)
+
 
         if args.height:
             pass

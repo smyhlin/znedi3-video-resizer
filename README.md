@@ -6,7 +6,7 @@ This program allows you to easily resize your video files to your desired dimens
 #### Features:
 
 Resizes videos to custom width, height, or both.
-Offers common video resolution presets (e.g., 720p, 1080p) for quick selection.
+Offers common video resolution scales (e.g., x2, x4) and pressets (x264, x265, nvenc, ffv1) for quick selection.
 Supports various video formats (compatibility may depend on your system's libraries).
 
 #### Installation:
@@ -35,7 +35,9 @@ ___
 
 > -hr, --height <height>: Specify the desired output video height (pixels).
 
-> -p, --preset <preset>: Select a predefined video resolution preset (e.g., 720p, 1080p).
+> -p, --preset <preset>: Select a predefined video encoding preset (e.g., 720p, 1080p).
+
+> -s, --scale <scale>: Input resize scale: x2(default), x3, x4, x8.
 ___
 #### Examples:
 
