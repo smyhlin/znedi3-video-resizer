@@ -5,10 +5,9 @@ import sys
 import os
 import pathlib
 import vapoursynth as vs
+sys.path.append(str(pathlib.Path().absolute()))
 from nnedi3_resample import nnedi3_resample
 
-
-sys.path.append(str(pathlib.Path().absolute()))
 
 args = dict(globals())
 
