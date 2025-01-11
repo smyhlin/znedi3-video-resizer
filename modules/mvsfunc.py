@@ -56,7 +56,7 @@ import vapoursynth as vs
 import functools
 import math
 from collections.abc import Sequence
-from ._metadata import __version__
+from _metadata import __version__
 
 if not hasattr(vs, 'core'):
     core = vs.get_core()
