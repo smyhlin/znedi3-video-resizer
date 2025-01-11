@@ -5,8 +5,8 @@
 :: Input and output video settings. Edit input_video to the path of the video you want to upscale,
 :: and edit output_video to the path where you want the upscaled video to be created.
 :: The paths must use / or \\ between the folder names, but not \.
-set input_video=C:\video\input.mp4
-set output_video=C:\output\output.mkv
+set input_video=C:/video/input.mp4
+set output_video=C:/video/output.mkv
 echo %input_video%
 :: Video compression settings. Remove the :: from the line with video_settings you want to use, 
 :: add :: to the beginning of lines with video_settings you don't want to use, and modify any settings 
@@ -26,6 +26,6 @@ echo %input_video%
 set video_settings=libx264 -crf 13 -preset slow -tune animation
 
 
-VSPipe.exe -c y4m --arg "video_path=%input_video%" ./encode.vpy - | ffmpeg -i pipe: -i "%input_video%" -map 0 -map 1:a -map 1:s? -c:v %video_settings% "%output_video%"
+VSPipe.exe -c y4m --arg "video_path=%input_video%" ./modules/encode.vpy - | ffmpeg -i pipe: -i "%input_video%" -map 0 -map 1:a -map 1:s? -c:v %video_settings% "%output_video%"
 
 pause
